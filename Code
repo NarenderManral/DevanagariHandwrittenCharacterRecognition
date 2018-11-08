@@ -1,0 +1,38 @@
+import os
+path=[]
+sub_path=[os.path.join("C:\\ML\\DevanagariHandwrittenCharacterDataset\\DevanagariHandwrittenCharacterDataset\\Train",f) for f in os.listdir("C:\ML\DevanagariHandwrittenCharacterDataset\DevanagariHandwrittenCharacterDataset\Train")]
+
+path=[os.path.join("C:\\ML\\DevanagariHandwrittenCharacterDataset\\DevanagariHandwrittenCharacterDataset\\Train\\character_1_ka",f) for f in os.listdir("C:\ML\DevanagariHandwrittenCharacterDataset\DevanagariHandwrittenCharacterDataset\Train\character_1_ka")]
+
+from PIL import Image
+import numpy as np
+import scipy.misc as smp
+import pickle
+dict=[]
+img=[]
+for i in (path):
+    img=Image.open(i)
+    img=np.array(img)
+    dict.append(img)
+        
+        
+import sklearn
+import sklearn.ensemble
+import sklearn.model_selection
+import numpy as np
+x=dict
+x=np.array(x)
+print(x)
+x=x.reshape(len(dict),32*32)
+print(x)
+y=[]
+for i in range(len(dict)):
+    y.append('ka')
+y=np.array(y)
+x_train,x_test,y_train,y_test=sklearn.model_selection.train_test_split(x,y,test_size=0.2)
+#x=np.array(x).reshape(-1,1)
+clf=sklearn.ensemble.RandomForestClassifier(random_state=0)
+
+clf=clf.fit(x_train,y_train)
+clf.score(x_train,y_train)
+clf.score(x_test,y_test)
